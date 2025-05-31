@@ -1,0 +1,35 @@
+concepts:
+  neighbours:
+    1A: 
+      - "TRF. VECINO1"
+      - "TRF. VECINO2"
+      - "TRF. VECINO3"
+    1B: 
+      - "TRF. VECINO4"
+      - "TRF. VECINO5"
+    1C: 
+      - "TRF. VECINO6"
+    2A: 
+      - "TRF. VECINO7"
+    2B: 
+      - "TRF. VECINO8"
+      - "TRF. VECINO9"
+    2C: 
+      - "TRF. VECINO10"
+    3A: 
+      - "TRF. VECINO11"
+    LOCAL: 
+      - "TRANSFERENCIA LOCAL"
+  cleaning: 
+    - "RCBO.LIMPIEZAS, S.L."
+  electricity: 
+    - "RCBO.COMPAÑIA LUZ, S.L."
+  water: 
+    - "RCBO.COMPAÑIA AGUA, S.A."
+    - "RCBO.COMPAÑIA AGUA, SOCIEDAD A"
+  bank: 
+    - "LIQ BANCO"
+    - "LIQ REM"
+    - "LIQ DEVOL"
+  insurance: 
+    - "RCBO.COMPAÑIA SEGUROS, S.A."
