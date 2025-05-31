@@ -65,37 +65,43 @@ def read_excel_with_colors(file_path):
     
     return df
 
-def calculate_yearly_water_expenses(df):
-    # Filter by water expenses
-    water_df = df[df['Concept'].isin(config['concepts']['water'])]
-    print(water_df)
+def calculate_yearly_expenses_by_type(df, type):
+    concepts = config['concepts'][type]
+    # Filter by type expenses
+    filtered_df = df[df['Concept'].str.contains('|'.join(concepts))]
+  
     # Convert date to datetime
-    water_df['Date'] = pd.to_datetime(water_df['Date'])
-    
+    filtered_df['Date'] = pd.to_datetime(filtered_df['Date'])
+
     # Extract year from date
-    water_df['Year'] = water_df['Date'].dt.year
-    
+    filtered_df['Year'] = filtered_df['Date'].dt.year
+
     # Calculate yearly totals
-    yearly_totals = water_df.groupby('Year')['Amount'].sum()
-    
+    yearly_totals = filtered_df.groupby('Year')['Amount'].sum()
+
     # Plot the data
     plt.figure(figsize=(12, 6))
     yearly_totals.plot(kind='bar', color='blue')
-    
-    plt.title('Yearly Water Expenses')
+
+    plt.title('Yearly ' + type + ' Expenses')
     plt.xlabel('Year')
     plt.ylabel('Amount')
     plt.xticks(rotation=0)
     plt.tight_layout()
-    plt.savefig('yearly_water_expenses.png')
+    plt.savefig('yearly_' + type + '_expenses.png')
     plt.close()
     
     # Print summary
-    print("\nYearly Water Expenses Summary:")
+    print('\nYearly ' + type + ' Expenses Summary:')
     print(yearly_totals)
 
 # Main execution
 file = 'Movimientos.xls'
 df = read_excel_with_colors(file)
-calculate_yearly_water_expenses(df)
-print("\nAnalysis complete! Check 'yearly_water_expenses.png' for the visualization.")
+calculate_yearly_expenses_by_type(df, 'water')
+calculate_yearly_expenses_by_type(df, 'cleaning')
+calculate_yearly_expenses_by_type(df, 'electricity')
+calculate_yearly_expenses_by_type(df, 'bank')
+calculate_yearly_expenses_by_type(df, 'insurance')
+
+print("\nAnalysis complete! Check 'yearly_*.png' for the visualization.")
