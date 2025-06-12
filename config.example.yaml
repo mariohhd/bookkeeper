@@ -33,3 +33,12 @@ concepts:
     - "LIQ DEVOL"
   insurance: 
     - "RCBO.COMPAÑIA SEGUROS, S.A."
+current_contribution: 
+  1A: 600
+  1B: 600
+  1C: 600
+  2A: 600
+  2B: 600
+  2C: 600
+  3A: 350
+  LOCAL: 400

@@ -95,6 +95,33 @@ def calculate_yearly_expenses_by_type(df, type):
     print('\nYearly ' + type + ' Expenses Summary:')
     print(yearly_totals)
 
+def calculate_yearly_contribution_by_neighbour(df, neighbour, year):
+    current_contribution = config['current_contribution'][neighbour]
+    concepts = config['concepts']['neighbours'][neighbour]
+    
+    # First convert date to datetime in the original DataFrame
+    df['Date'] = pd.to_datetime(df['Date'])
+    
+    # Then filter by type expenses
+    filtered_df = df[df['Concept'].str.contains('|'.join(concepts))]
+    
+    # Filter by specified year
+    yearly_df = filtered_df[filtered_df['Date'].dt.year == year]
+
+    # Calculate yearly total for this neighbor
+    yearly_total = yearly_df['Amount'].sum()
+
+    # Calculate percentage of total contribution
+    percentage = (yearly_total / current_contribution * 100) if current_contribution > 0 else 0
+
+    # Print results
+    print(f"\nContributions for {neighbour} in {year}:")
+    print(f"- Total contribution: €{yearly_total:.2f}")
+    print(f"- Percentage of total: {percentage:.2f}%")
+    
+    return yearly_total, percentage, neighbour
+    
+
 # Main execution
 file = 'Movimientos.xls'
 df = read_excel_with_colors(file)
@@ -103,5 +130,13 @@ calculate_yearly_expenses_by_type(df, 'cleaning')
 calculate_yearly_expenses_by_type(df, 'electricity')
 calculate_yearly_expenses_by_type(df, 'bank')
 calculate_yearly_expenses_by_type(df, 'insurance')
+calculate_yearly_contribution_by_neighbour(df, '1A', 2024)
+calculate_yearly_contribution_by_neighbour(df, '1B', 2024)
+calculate_yearly_contribution_by_neighbour(df, '1C', 2024)
+calculate_yearly_contribution_by_neighbour(df, '2A', 2024)
+calculate_yearly_contribution_by_neighbour(df, '2B', 2024)
+calculate_yearly_contribution_by_neighbour(df, '2C', 2024)
+calculate_yearly_contribution_by_neighbour(df, 'LOCAL', 2024)
+        
 
 print("\nAnalysis complete! Check 'yearly_*.png' for the visualization.")
